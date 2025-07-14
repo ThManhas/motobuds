@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento Técnico - Moto Buds Loop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Harmony (Light Slate, Dark Slate Text, Accent Blue) -->
+    <!-- Application Structure Plan: A task-oriented SPA with a persistent left-sidebar navigation for quick access to key technician modules (Overview, Operation, Troubleshooting, etc.). This replaces a linear presentation flow, allowing for rapid information retrieval, which is critical in a repair scenario. Content within sections uses accordions and tabs to manage information density and focus the user's attention. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification. 1. LED Status -> Inform -> Interactive Grid -> Hover/Click -> More engaging than a table. 2. Gestures -> Inform -> Interactive Table -> Hover highlights -> Clarifies gesture-action mapping. 3. Troubleshooting -> Organize/Solve -> Accordion (HTML <details>) -> Click to reveal -> Hides non-relevant info, reducing cognitive load for technicians looking for a specific fix. All interactions are built with Vanilla JS to keep it lightweight. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .nav-link.active {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            border-bottom-color: #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] > summary {
+           margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div id="app" class="flex flex-col md:flex-row min-h-screen">
+        
+        <aside class="w-full md:w-64 bg-slate-100 p-4 md:p-6 border-r border-slate-200">
+            <h1 class="text-xl font-bold text-slate-900 mb-6">Treinamento Técnico</h1>
+            <h2 class="text-md font-semibold text-blue-600 mb-4">Moto Buds Loop</h2>
+            <nav id="main-nav">
+                <ul class="space-y-2">
+                    <li><a href="#" class="nav-link text-slate-700 hover:bg-slate-200 block p-3 rounded-lg transition-colors duration-200" data-target="visao-geral">1. Visão Geral</a></li>
+                    <li><a href="#" class="nav-link text-slate-700 hover:bg-slate-200 block p-3 rounded-lg transition-colors duration-200" data-target="operacao">2. Operação Básica</a></li>
+                    <li><a href="#" class="nav-link text-slate-700 hover:bg-slate-200 block p-3 rounded-lg transition-colors duration-200" data-target="app">3. App Moto Buds</a></li>
+                    <li><a href="#" class="nav-link text-slate-700 hover:bg-slate-200 block p-3 rounded-lg transition-colors duration-200" data-target="solucao-problemas">4. Solução de Problemas</a></li>
+                    <li><a href="#" class="nav-link text-slate-700 hover:bg-slate-200 block p-3 rounded-lg transition-colors duration-200" data-target="seguranca">5. Segurança</a></li>
+                    <li><a href="#" class="nav-link text-slate-700 hover:bg-slate-200 block p-3 rounded-lg transition-colors duration-200" data-target="assistente-diagnostico">6. Assistente de Diagnóstico ✨</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto">
+            
+            <div id="visao-geral" class="content-section">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Visão Geral do Produto</h2>
+                <p class="mb-8 text-slate-600">Esta seção apresenta os componentes principais dos fones de ouvido Moto Buds Loop (Modelo XT2545-1) e seu estojo de carregamento. Conhecer cada parte é fundamental para o diagnóstico e reparo corretos.</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Componentes Principais</h3>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">▶</span><div><strong>Nome:</strong> moto buds LOOP</div></li>
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">▶</span><div><strong>Modelo:</strong> XT2545-1</div></li>
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">▶</span><div><strong>Fabricante:</strong> Motorola Mobility LLC</div></li>
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">▶</span><div><strong>Funcionalidade:</strong> Controle de mídia, chamadas e assistente de voz via gestos.</div></li>
+                            <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">▶</span><div><strong>Destaque:</strong> Fones intercambiáveis, podem ser usados em qualquer orelha.</div></li>
+                        </ul>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Estrutura Física</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Estojo de Carregamento</h4>
+                                <p class="text-sm text-slate-600">Contatos de Carregamento, Indicador LED, Botão de Função, Porta USB-C®.</p>
+                            </div>
+                             <div>
+                                <h4 class="font-semibold text-slate-800">Fones de Ouvido</h4>
+                                <p class="text-sm text-slate-600">Botão de Controle, Compartimento do Driver, Microfone, Compartimento Traseiro, Ponte.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="operacao" class="content-section">
+                 <h2 class="text-3xl font-bold text-slate-900 mb-4">Operação Básica</h2>
+                <p class="mb-8 text-slate-600">Explore as funções essenciais do dia a dia do Moto Buds Loop. Esta seção detalha os procedimentos de carregamento, os métodos de pareamento, o significado dos LEDs e os gestos de controle.</p>
+                
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Carregamento e LED</h3>
+                         <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">Procedimento</h4>
+                                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                    <li>Use o cabo USB-C® para carregar o estojo.</li>
+                                    <li>Fones carregam automaticamente dentro do estojo.</li>
+                                    <li>**Dica:** Armazene no estojo para preservar a bateria.</li>
+                                </ul>
+                            </div>
+                             <div>
+                                 <h4 class="font-semibold mb-2">Status do LED (Estojo)</h4>
+                                 <div class="space-y-2 text-sm">
+                                     <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-yellow-400 animate-pulse mr-3"></div> Piscando em amarelo: Carregando.</div>
+                                     <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-green-500 mr-3"></div> Verde sólido: Carga > 60% / Completo.</div>
+                                     <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-yellow-500 mr-3"></div> Amarelo sólido: Bateria baixa.</div>
+                                     <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-blue-500 animate-pulse mr-3"></div> Piscando em azul: Pareando.</div>
+                                     <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-green-500 mr-3"></div> Piscando em verde 4x: Pareado.</div>
+                                     <div class="flex items-center"><div class="w-4 h-4 rounded-full bg-white border border-slate-400 animate-pulse mr-3"></div> Piscando em branco: Resetado.</div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Pareamento e Conexão</h3>
+                        <div id="pairing-tabs" class="border-b border-slate-200 mb-4">
+                             <nav class="-mb-px flex space-x-6">
+                                <button class="tab-button py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-blue-600" data-target="fast-pair">Pareamento Rápido</button>
+                                <button class="tab-button py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-blue-600" data-target="manual-pair">Pareamento Manual</button>
+                                <button class="tab-button py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-blue-600" data-target="dual-conn">Conexão Dupla</button>
+                             </nav>
+                        </div>
+                        <div id="fast-pair" class="tab-content">
+                            <h4 class="font-semibold mb-2">Pareamento Rápido (Google Fast Pair)</h4>
+                            <p class="text-slate-600 mb-2">Requisito: Android 12+ ou compatível.</p>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                                <li>Ligue o Bluetooth no dispositivo.</li>
+                                <li>Com os fones no estojo aberto, eles entram em modo de pareamento.</li>
+                                <li>Aguarde o pop-up e toque em "Conectar".</li>
+                            </ol>
+                        </div>
+                        <div id="manual-pair" class="tab-content">
+                             <h4 class="font-semibold mb-2">Pareamento Manual</h4>
+                             <p class="text-slate-600 mb-2">Compatibilidade: Android, iOS, Windows, etc.</p>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600">
+                                <li>Ligue o Bluetooth e abra a lista de dispositivos.</li>
+                                <li>Com os fones no estojo aberto, **pressione e segure o Botão de Função por 2 segundos** (LED pisca em azul).</li>
+                                <li>Selecione "moto buds loop" na lista.</li>
+                            </ol>
+                        </div>
+                         <div id="dual-conn" class="tab-content">
+                             <h4 class="font-semibold mb-2">Conexão Dupla</h4>
+                             <p class="text-slate-600">Conecta os fones a dois dispositivos simultaneamente. Ativado via App Moto Buds (Android). A prioridade de áudio é: Chamadas > Mídia > Ocioso.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Gestos de Controle</h3>
+                        <p class="text-sm text-slate-500 mb-4">Todos os gestos são personalizáveis via aplicativo Moto Buds.</p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="border-b">
+                                    <tr>
+                                        <th class="p-3">Ação</th>
+                                        <th class="p-3">Fone Esquerdo (L)</th>
+                                        <th class="p-3">Fone Direito (R)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b hover:bg-slate-50">
+                                        <td class="p-3 font-semibold">1 Toque</td>
+                                        <td colspan="2" class="p-3 text-center">Reproduzir/Pausar Música, Atender/Encerrar Chamada</td>
+                                    </tr>
+                                    <tr class="border-b hover:bg-slate-50">
+                                        <td class="p-3 font-semibold">2 Toques</td>
+                                        <td class="p-3">Faixa Anterior</td>
+                                        <td class="p-3">Próxima Faixa</td>
+                                    </tr>
+                                    <tr class="border-b hover:bg-slate-50">
+                                        <td class="p-3 font-semibold">3 Toques</td>
+                                        <td class="p-3">Aumentar Volume</td>
+                                        <td class="p-3">Diminuir Volume</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 font-semibold">Segurar por 3s</td>
+                                        <td colspan="2" class="p-3 text-center">Ativar Assistente de Voz, Rejeitar Chamada</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="app" class="content-section">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Aplicativo Moto Buds</h2>
+                <p class="mb-8 text-slate-600">O aplicativo Moto Buds (disponível apenas para Android) desbloqueia a experiência completa do produto, permitindo personalização avançada e acesso a funcionalidades exclusivas.</p>
+                 <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Funcionalidades Chave</h3>
+                    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">🔋</span><span>Níveis de Bateria Detalhados</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">🎧</span><span>Modos de Controle de Ruído (Crystal Talk)</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">🎚️</span><span>Configurações de Som e Equalizador</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">👆</span><span>Personalização de Gestos</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">🔄</span><span>Atualização de Firmware</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">🔗</span><span>Ativação de Conexão Dupla</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">👂</span><span>Detecção de Uso no Ouvido</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">📍</span><span>Função "Encontrar Meus Fones"</span></div>
+                        <div class="flex items-start"><span class="text-blue-500 text-xl mr-3">✏️</span><span>Renomear Fones de Ouvido</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="solucao-problemas" class="content-section">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Solução de Problemas e Manutenção</h2>
+                <p class="mb-8 text-slate-600">Esta é a seção mais crítica para o técnico. Aqui você encontrará os procedimentos de diagnóstico rápido, guias para problemas comuns e as melhores práticas de limpeza e manutenção para garantir a longevidade do produto.</p>
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Diagnóstico Rápido</h3>
+                         <div class="grid md:grid-cols-3 gap-4 text-center">
+                             <div class="p-4 bg-slate-100 rounded-lg">
+                                 <h4 class="font-semibold">1. Desparear</h4>
+                                 <p class="text-sm text-slate-600">Remova o dispositivo das configurações de Bluetooth.</p>
+                             </div>
+                              <div class="p-4 bg-slate-100 rounded-lg">
+                                 <h4 class="font-semibold">2. Reiniciar</h4>
+                                 <p class="text-sm text-slate-600">Coloque os fones no estojo, feche e reabra a tampa.</p>
+                             </div>
+                              <div class="p-4 bg-red-100 rounded-lg border border-red-200">
+                                 <h4 class="font-semibold text-red-800">3. Redefinição de Fábrica</h4>
+                                 <p class="text-sm text-red-700">Com os fones no estojo, segure o botão por **12 segundos** (LED pisca em branco).</p>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                         <h3 class="text-xl font-semibold mb-4">Problemas Comuns</h3>
+                         <div class="space-y-4">
+                            <details class="bg-slate-50 p-4 rounded-lg cursor-pointer">
+                                <summary class="font-semibold flex justify-between items-center">
+                                    <span>Problemas de Áudio / Chamadas</span>
+                                    <span class="text-blue-500 text-sm">Ver Solução</span>
+                                </summary>
+                                <ul class="list-disc list-inside space-y-2 mt-4 text-slate-600 border-t pt-4">
+                                    <li>Ajustar o volume no dispositivo conectado.</li>
+                                    <li>Mover-se para outra área para evitar interferência.</li>
+                                    <li>**Limpar ponteiras e áreas de malha dos fones.**</li>
+                                    <li>Garantir que os fones e o dispositivo estão dentro do alcance de 10m.</li>
+                                    <li>Manter fones afastados de fontes de ondas eletromagnéticas (micro-ondas, roteadores Wi-Fi).</li>
+                                </ul>
+                            </details>
+                            <details class="bg-slate-50 p-4 rounded-lg cursor-pointer">
+                                <summary class="font-semibold flex justify-between items-center">
+                                    <span>Problemas de Carregamento/Pareamento do Estojo</span>
+                                    <span class="text-blue-500 text-sm">Ver Solução</span>
+                                </summary>
+                                <div class="mt-4 text-slate-600 border-t pt-4">
+                                    <p><strong>Sintoma:</strong> LED do estojo pisca em amarelo e não pareia.</p>
+                                    <p><strong>Solução:</strong> A bateria do estojo está muito baixa. É necessário carregar o estojo por tempo suficiente antes de tentar o pareamento.</p>
+                                </div>
+                            </details>
+                         </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md">
+                         <h3 class="text-xl font-semibold mb-4">Limpeza e Manutenção</h3>
+                         <ul class="space-y-3 text-slate-600">
+                            <li><strong>Geral:</strong> Não usar alvejantes ou produtos de limpeza abrasivos.</li>
+                            <li><strong>Estojo:</strong> Usar pano com álcool isopropílico 70% para o exterior. Usar pano seco para o interior e os contatos de carregamento.</li>
+                            <li><strong>Fones:</strong> Usar pano macio e seco. Remover com cuidado a cera de ouvido do compartimento do Driver.</li>
+                            <li><strong>Atenção:</strong> Danos por líquido **NÃO** são cobertos pela garantia. Sempre seque completamente o produto antes de carregar.</li>
+                         </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="seguranca" class="content-section">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Segurança e Informações Legais</h2>
+                <p class="mb-8 text-slate-600">Esta seção resume os pontos críticos de segurança que devem ser observados durante o manuseio e reparo do produto. A segurança do técnico e do cliente é a prioridade.</p>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-red-600">Pontos Críticos de Segurança</h3>
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                        <div class="flex items-start"><span class="text-red-500 mr-3 mt-1">⚠️</span><div><strong>Audição:</strong> Alerte o cliente sobre os riscos de volume alto por longos períodos.</div></div>
+                        <div class="flex items-start"><span class="text-red-500 mr-3 mt-1">⚠️</span><div><strong>Condução:</strong> O uso durante a condução de veículos é perigoso e pode ser ilegal.</div></div>
+                        <div class="flex items-start"><span class="text-red-500 mr-3 mt-1">⚠️</span><div><strong>Imãs:</strong> O produto contém imãs. Pode interferir com marca-passos e dispositivos médicos.</div></div>
+                        <div class="flex items-start"><span class="text-red-500 mr-3 mt-1">⚠️</span><div><strong>Bateria:</strong> A remoção da bateria deve ser feita apenas por um centro de serviço autorizado Motorola.</div></div>
+                        <div class="flex items-start"><span class="text-red-500 mr-3 mt-1">⚠️</span><div><strong>Desmontagem:</strong> **Não é recomendada**. Pode causar perigo, danificar o produto e anular a garantia.</div></div>
+                        <div class="flex items-start"><span class="text-red-500 mr-3 mt-1">⚠️</span><div><strong>Crianças/Animais:</strong> Manter longe, contém peças pequenas com risco de asfixia.</div></div>
+                    </div>
+                     <div class="mt-6 border-t pt-4 text-sm text-slate-500">
+                        <p>Para mais informações, consulte: <a href="https://www.motorola.com/support" target="_blank" class="text-blue-600 hover:underline">www.motorola.com/support</a> e <a href="https://motorola.com/accessory-legal" target="_blank" class="text-blue-600 hover:underline">motorola.com/accessory-legal</a>.</p>
+                     </div>
+                </div>
+            </div>
+
+            <div id="assistente-diagnostico" class="content-section">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Assistente de Diagnóstico ✨</h2>
+                <p class="mb-8 text-slate-600">Descreva o problema que o cliente está enfrentando. O assistente usará o conhecimento do guia do usuário para sugerir possíveis causas e etapas de solução de problemas.</p>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Descreva o Problema</h3>
+                    <textarea id="problem-input" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-4 h-32 resize-y" placeholder="Ex: O fone esquerdo não está conectando, o LED está piscando em amarelo."></textarea>
+                    <button id="diagnose-button" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+                        Diagnosticar Problema
+                    </button>
+                    <div id="loading-indicator" class="mt-4 text-blue-600 font-medium hidden">
+                        Analisando... Por favor, aguarde.
+                    </div>
+                    <div id="diagnosis-output" class="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 whitespace-pre-wrap">
+                        <!-- O resultado do diagnóstico aparecerá aqui. -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('#main-nav a');
+            const contentSections = document.querySelectorAll('.content-section');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function showSection(targetId) {
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', section.id === targetId);
+                });
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.target === targetId);
+                });
+            }
+            
+            function showTab(targetId) {
+                tabContents.forEach(content => {
+                    content.classList.toggle('active', content.id === targetId);
+                });
+                 tabButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.target === targetId);
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.dataset.target;
+                    showSection(targetId);
+                });
+            });
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.dataset.target;
+                    showTab(targetId);
+                });
+            });
+
+            // Initial state
+            showSection('visao-geral');
+            showTab('fast-pair');
+
+            // Gemini API Integration
+            const problemInput = document.getElementById('problem-input');
+            const diagnoseButton = document.getElementById('diagnose-button');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const diagnosisOutput = document.getElementById('diagnosis-output');
+
+            const knowledgeBase = `
+                Contexto do Produto - Moto Buds Loop (Modelo XT2545-1):
+                - Fones de ouvido sem fio com estojo de carregamento.
+                - Controles por gestos (1 toque, 2 toques, 3 toques, segurar 3s).
+                - Detecção de uso no ouvido (pausa/retoma música).
+                - Aplicativo Moto Buds (Android) para personalização e funções extras.
+
+                Status do LED (Estojo):
+                - Piscando em azul: Fones de ouvido estão pareando.
+                - Piscando em verde quatro vezes: Fones de ouvido estão pareados.
+                - Piscando em amarelo: Estojo de carregamento está carregando.
+                - Verde sólido: Carregamento do estojo completo ou bateria do estojo acima de 60%.
+                - Amarelo sólido: Bateria baixa.
+                - Branco piscando: Fones de ouvido redefinidos (reset).
+
+                Solução de Problemas:
+                - Desparear: Vá nas configurações Bluetooth do dispositivo e toque em "Esquecer".
+                - Reiniciar: Coloque ambos os fones no estojo de carregamento, feche a tampa e reabra.
+                - Redefinição de Fábrica (Factory reset): Com os fones no estojo aberto, pressione e segure o Botão de Função por 12 segundos. O LED piscará em branco. Será necessário parear novamente.
+
+                Problemas de Áudio / Chamadas:
+                - Ajustar o volume no dispositivo conectado.
+                - Mover-se para outra área (interferência).
+                - Limpar as ponteiras e os fones de ouvido, especialmente saídas e áreas de malha.
+                - Garantir que os fones e o dispositivo pareado estejam dentro do alcance Bluetooth (10 metros).
+                - Manter os fones afastados de ondas eletromagnéticas.
+
+                Problemas de Carregamento:
+                - Se o LED piscar em amarelo, a bateria do estojo está baixa e não está pronta para parear. Carregue o estojo suficientemente.
+                - Remover películas protetoras dos fones ou estojo antes de carregar.
+
+                Gestos de Controle:
+                - 1 toque (L ou R): Reproduzir/pausar música, atender/encerrar chamada.
+                - 2 toques (L): Faixa anterior.
+                - 2 toques (R): Próxima faixa.
+                - 3 toques (L): Aumentar volume.
+                - 3 toques (R): Diminuir volume.
+                - Pressionar e segurar por 3 segundos (L ou R): Ativar assistente de voz ou rejeitar chamada.
+
+                Detecção de Uso no Ouvido:
+                - Pausa a música automaticamente quando um fone é removido e retoma quando colocado de volta.
+            `;
+
+            diagnoseButton.addEventListener('click', async function() {
+                const problem = problemInput.value.trim();
+                if (!problem) {
+                    diagnosisOutput.textContent = 'Por favor, descreva o problema para o diagnóstico.';
+                    return;
+                }
+
+                diagnoseButton.disabled = true;
+                loadingIndicator.classList.remove('hidden');
+                diagnosisOutput.textContent = '';
+
+                try {
+                    let chatHistory = [];
+                    const prompt = `Como um técnico especialista em reparos de fones de ouvido Motorola Moto Buds Loop, analise o seguinte problema do cliente e forneça um diagnóstico conciso e etapas de solução de problemas, com base no conhecimento fornecido. Se a informação não estiver no contexto, diga que não pode ajudar.
+
+                    Problema do cliente: "${problem}"
+
+                    ${knowledgeBase}
+
+                    Diagnóstico e Solução:`;
+                    
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        diagnosisOutput.textContent = text;
+                    } else {
+                        diagnosisOutput.textContent = 'Não foi possível obter um diagnóstico. A estrutura da resposta da API Gemini é inesperada.';
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao chamar a API Gemini:', error);
+                    diagnosisOutput.textContent = 'Ocorreu um erro ao tentar diagnosticar o problema. Por favor, tente novamente.';
+                } finally {
+                    diagnoseButton.disabled = false;
+                    loadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
